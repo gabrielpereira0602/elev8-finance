@@ -1,0 +1,32 @@
+{
+  "name": "elev8/finance-api",
+  "description": "Elev8 Finance API (beta)",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.2",
+    "ext-pdo": "*",
+    "ext-sodium": "*",
+    "ext-mbstring": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Elev8\\Finance\\": "src/"
+    },
+    "files": [
+      "src/Support.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Elev8\\Finance\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}
