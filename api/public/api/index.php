@@ -5,7 +5,8 @@ declare(strict_types=1);
 use Elev8\Finance\App;
 use Elev8\Finance\Db;
 
-$root = dirname(__DIR__, 2);
+// Repo layout: api/public/api/index.php. Server layout: public_html/api/index.php with the code in ../app.
+$root = is_dir(dirname(__DIR__, 2) . '/app') ? dirname(__DIR__, 2) . '/app' : dirname(__DIR__, 2);
 require $root . '/vendor/autoload.php';
 
 $configPath = getenv('FINANCE_CONFIG') ?: dirname($root) . '/finance-private/config.php';

@@ -34,6 +34,18 @@ finance-private/   → FORA do public_html: config.php com senhas e chaves (nunc
 | Escritas exigem cookie de sessão + token CSRF + origem do app | `App::route` |
 | Login: argon2id, 5 erros bloqueiam 15 min, IP e e-mail guardados só como hash | `Auth` |
 
+## App (web/)
+
+TypeScript + Preact + Vite, sem framework pesado (~29 kB comprimido). Telas: Início ("Pode gastar hoje"), Lançar (frase, voz ou campos, sempre com rascunho), Análises (Geral, Fluxo, Categorias, Tendência, Calendário, Futuro), Aprender (11 princípios), Ajustes.
+
+- `src/parser.ts` entende "Uber 28,50 hoje transporte", "Cadeira 480 em 4x cartão XP", "Recebi 4200 salário" e números falados. Roda no aparelho; nada sai antes de confirmar. Quando há ambiguidade, pergunta só o campo que falta.
+- Service worker guarda só os arquivos do app, nunca dados da API. Lançamentos confirmados sem internet esperam numa fila local (IndexedDB) e são enviados com a mesma chave de idempotência; a fila é apagada ao sair.
+- Atalho da Siri: Ajustes › Instalar explica como criar "Lançar gasto" (Ditar Texto + Abrir URL `/#/lancar?t=`).
+
+```bash
+cd web && npm ci && npm test && npm run build
+```
+
 ## Rodar localmente
 
 ```bash
@@ -45,6 +57,9 @@ php tests/run.php        # precisa de um MySQL de teste (veja o topo do arquivo)
 ```
 
 ## Publicar (resumo; detalhes na Etapa F)
+
+`deploy/package.sh` gera `dist/app` (código PHP, fora do public_html) e `dist/public_html` (app + `/api`).
+
 
 1. hPanel: criar o subdomínio `finance` com pasta própria **fora** do `public_html` do site, e ativar o SSL.
 2. Criar um banco MySQL só para o app.
